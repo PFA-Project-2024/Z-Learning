@@ -17,7 +17,7 @@ public class Certif {
     String name;
     String description;
     @Field( name ="image")
-    byte[] Mainimage;
+    String mainImagePath;
     Double price;
     String categoryName;
 

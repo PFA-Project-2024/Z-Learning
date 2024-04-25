@@ -47,13 +47,13 @@ public class CertifController {
     @PostMapping("/uploadCertifImage/{id}")
     public ResponseEntity<String> uploadImage(@PathVariable String id, @RequestParam("file") MultipartFile file){
         try {
-            certifService.storeImage(id, file.getBytes());
+            certifService.storeImage(id, file);
             return ResponseEntity.ok("Image uploaded successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
         }
     }
-    @GetMapping("/{id}/image")
+    /*@GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable String id){
         byte[] imageData = certifService.loadImage(id);
         if (imageData != null) {
@@ -64,7 +64,7 @@ public class CertifController {
             return ResponseEntity.notFound().build();
         }
 
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCertif(@PathVariable String id) {

@@ -6,8 +6,12 @@ import com.PfaGroup5.ZLearning.repository.CategoryRepo;
 import com.PfaGroup5.ZLearning.repository.CertifRepo;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,7 +88,7 @@ public class CertifService {
         savedCertif.setName(certif.getName());
         savedCertif.setCategoryName(certif.getCategoryName());
         savedCertif.setPrice(certif.getPrice());
-        savedCertif.setMainimage(certif.getMainimage());
+        savedCertif.setMainImagePath(certif.getMainImagePath());
         savedCertif.setDescription(certif.getDescription());
 
         certifRepo.save(savedCertif);
@@ -92,23 +96,34 @@ public class CertifService {
 
 
     }
-    public void storeImage(String certifId, byte[] image) {
+    public void storeImage(String certifId, MultipartFile file) {
         Certif certif = certifRepo.findById(certifId).orElseThrow(() -> new RuntimeException(
                 String.format("Cannot Find Certif by ID %s", certifId)));
 
+        String originalFilename = file.getOriginalFilename();
+        int lastDotIndex = originalFilename.lastIndexOf(".");
+        String fileExtension = (lastDotIndex != -1) ? originalFilename.substring(lastDotIndex + 1) : "";
+        try {
+            // path will be changed after deployement
+            file.transferTo(new File("/home/ahmed/Z-learning/recources/" + certif.getId() + "_" + LocalDateTime.now().withSecond(0).withNano(0) + fileExtension));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error saving file");
+        }
+        String image = "/home/ahmed/Z-learning/recources/" + certif.getId() + "_" + LocalDateTime.now().withSecond(0).withNano(0) + fileExtension;
         if (certif != null) {
-            certif.setMainimage(image);
+            certif.setMainImagePath(image);
             certifRepo.save(certif);
         }
     }
 
-    public byte[] loadImage(String id) {
+    /*public byte[] loadImage(String id) {
         Certif certif = certifRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException(
                         String.format("Cannot Find Certif by ID %s", id)));
 
-        return certif.getMainimage();
-    }
+       // return certif.getMainImagePath();
+    }*/
     public ArrayList<Certif> getAllCertifsByIds(ArrayList<String> ids){
         ArrayList<Certif> certifs = new ArrayList<>();
         for (String id : ids){
