@@ -1,4 +1,4 @@
-package com.PfaGroup5.ZLearning.Controller;
+package com.PfaGroup5.ZLearning.controller;
 
 
 import com.PfaGroup5.ZLearning.model.Certif;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -53,18 +54,23 @@ public class CertifController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
         }
     }
-    /*@GetMapping("/{id}/image")
-    public ResponseEntity<byte[]> getImage(@PathVariable String id){
-        byte[] imageData = certifService.loadImage(id);
-        if (imageData != null) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG); // Set the content type of the response
-            return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
 
-    }*/
+
+    @GetMapping("/downloadCertifImage/{id}")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable String id) {
+        try {
+            byte[] fileContent = certifService.getImageContent(id);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // Change the content type based on your file extension
+            headers.setContentDispositionFormData("attachment", "image.jpg"); // Set the desired file name
+            return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCertif(@PathVariable String id) {

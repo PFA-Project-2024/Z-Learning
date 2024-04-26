@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,13 +118,17 @@ public class CertifService {
         }
     }
 
-    /*public byte[] loadImage(String id) {
-        Certif certif = certifRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot Find Certif by ID %s", id)));
 
-       // return certif.getMainImagePath();
-    }*/
+    public byte[] getImageContent(String certifId) throws IOException {
+        Certif certif = certifRepo.findById(certifId)
+                .orElseThrow(() -> new RuntimeException(String.format("Cannot Find Certif by ID %s", certifId)));
+
+        String imagePath = certif.getMainImagePath();
+        File file = new File(imagePath);
+
+        return Files.readAllBytes(file.toPath());
+    }
+
     public ArrayList<Certif> getAllCertifsByIds(ArrayList<String> ids){
         ArrayList<Certif> certifs = new ArrayList<>();
         for (String id : ids){

@@ -1,10 +1,8 @@
-package com.PfaGroup5.ZLearning.Controller;
+package com.PfaGroup5.ZLearning.controller;
 
 import com.PfaGroup5.ZLearning.model.Category;
 import com.PfaGroup5.ZLearning.model.Certif;
 import com.PfaGroup5.ZLearning.service.CategoryService;
-import com.PfaGroup5.ZLearning.service.CertifService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
