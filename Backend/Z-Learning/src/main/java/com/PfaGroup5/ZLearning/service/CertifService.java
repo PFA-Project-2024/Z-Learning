@@ -4,13 +4,11 @@ import com.PfaGroup5.ZLearning.model.Category;
 import com.PfaGroup5.ZLearning.model.Certif;
 import com.PfaGroup5.ZLearning.repository.CategoryRepo;
 import com.PfaGroup5.ZLearning.repository.CertifRepo;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,8 +28,8 @@ public class CertifService {
 
     public void addCertif(Certif certif) {
         certifRepo.insert(certif);
-        Certif savedCertif = certifRepo.findByName(certif.getName()).orElseThrow(() -> new RuntimeException(
-                String.format("Cannot Find Certif by Name %s", certif.getName())));
+        Certif savedCertif = certifRepo.findByName(certif.getTitle()).orElseThrow(() -> new RuntimeException(
+                String.format("Cannot Find Certif by Name %s", certif.getTitle())));
 
 
         String categoryName = certif.getCategoryName();
@@ -61,11 +59,11 @@ public class CertifService {
     }
 
     public void updateCertif(Certif certif) {
-        // when updating a certificate, we need to update the category as well if the category name has changed
-        // so we need to check if the category name has changed
-        Certif savedCertif = certifRepo.findByName(certif.getName())
+        // when updating a certificate, we need to update the category as well if the category title has changed
+        // so we need to check if the category title has changed
+        Certif savedCertif = certifRepo.findByName(certif.getTitle())
                 .orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot Find Certif by Name %s", certif.getName())));
+                        String.format("Cannot Find Certif by Name %s", certif.getTitle())));
         String oldCategoryName = savedCertif.getCategoryName();
         String newCategoryName = certif.getCategoryName();
         Category cat = categoryRepo.findByName(newCategoryName);
@@ -86,9 +84,14 @@ public class CertifService {
             categoryRepo.save(cat2);
 
         }
-        savedCertif.setName(certif.getName());
+        savedCertif.setTitle(certif.getTitle());
         savedCertif.setCategoryName(certif.getCategoryName());
         savedCertif.setPrice(certif.getPrice());
+        savedCertif.setRating(certif.getRating());
+        savedCertif.setStartDate(certif.getStartDate());
+        savedCertif.setEndDate(certif.getEndDate());
+        savedCertif.setInstructorName(certif.getInstructorName());
+        savedCertif.setURL(certif.getURL());
         savedCertif.setMainImagePath(certif.getMainImagePath());
         savedCertif.setDescription(certif.getDescription());
 

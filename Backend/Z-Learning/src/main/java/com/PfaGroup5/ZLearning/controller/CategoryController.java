@@ -4,10 +4,7 @@ import com.PfaGroup5.ZLearning.model.Category;
 import com.PfaGroup5.ZLearning.model.Certif;
 import com.PfaGroup5.ZLearning.service.CategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,12 @@ public class CategoryController {
 
 
 
+
+    @PostMapping("/add")
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+
+        return  ResponseEntity.ok(categoryService.addCategory(category));
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<Category>> getAllCategories() {

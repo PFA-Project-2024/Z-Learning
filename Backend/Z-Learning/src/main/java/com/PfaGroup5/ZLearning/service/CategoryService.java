@@ -21,6 +21,7 @@ public class CategoryService {
     public Category findByName(String name) {
         return categoryRepo.findByName(name);
     }
+
     public void EditIdList(String action, String categotyName ,String certifIf){
         if (action.equals("add")){
             Category category = categoryRepo.findByName(categotyName);
@@ -48,5 +49,15 @@ public class CategoryService {
             return certifList = certifService.getAllCertifsByIds(certifs);
         }
         return null;
+    }
+
+    public Category addCategory(Category category) {
+
+        Category categories = categoryRepo.findByName(category.getName());
+        if (categories != null) {
+            return null;
+        }
+        categoryRepo.insert(category);
+        return category;
     }
 }

@@ -62,7 +62,7 @@ public class CertifController {
             byte[] fileContent = certifService.getImageContent(id);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG); // Change the content type based on your file extension
-            headers.setContentDispositionFormData("attachment", "image.jpg"); // Set the desired file name
+            headers.setContentDispositionFormData("attachment", "image.jpg"); // Set the desired file title
             return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
