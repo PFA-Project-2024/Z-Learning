@@ -1,8 +1,8 @@
 package com.PfaGroup5.ZLearning.controller;
 
 
-import com.PfaGroup5.ZLearning.model.Certif;
-import com.PfaGroup5.ZLearning.service.CertifService;
+import com.PfaGroup5.ZLearning.model.Course;
+import com.PfaGroup5.ZLearning.service.CourseService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,40 +15,40 @@ import java.util.List;
 
 @RestController
     @RequestMapping("Api/Certif")
-public class CertifController {
+public class CourseController {
 
-    private final CertifService certifService;
+    private final CourseService courseService;
 
-    public CertifController(CertifService certifService) {
-        this.certifService = certifService;
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
     }
 
     @PostMapping
-    public ResponseEntity addCertif(@RequestBody Certif certif) {
-        certifService.addCertif(certif);
+    public ResponseEntity addCertif(@RequestBody Course course) {
+        courseService.addCertif(course);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<Certif>> getAllCertif() {
-        return ResponseEntity.ok(certifService.getAllCertif());
+    public ResponseEntity<List<Course>> getAllCertif() {
+        return ResponseEntity.ok(courseService.getAllCertif());
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Certif> getCertifByName(@PathVariable String name) {
-        return ResponseEntity.ok(certifService.getCertifByName(name));
+    public ResponseEntity<Course> getCertifByName(@PathVariable String name) {
+        return ResponseEntity.ok(courseService.getCertifByName(name));
     }
 
     @PutMapping
-    public ResponseEntity updateCertif(@RequestBody Certif certif) {
-        certifService.updateCertif(certif);
+    public ResponseEntity updateCertif(@RequestBody Course course) {
+        courseService.updateCertif(course);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/uploadCertifImage/{id}")
     public ResponseEntity<String> uploadImage(@PathVariable String id, @RequestParam("file") MultipartFile file){
         try {
-            certifService.storeImage(id, file);
+            courseService.storeImage(id, file);
             return ResponseEntity.ok("Image uploaded successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
@@ -59,7 +59,7 @@ public class CertifController {
     @GetMapping("/downloadCertifImage/{id}")
     public ResponseEntity<byte[]> downloadImage(@PathVariable String id) {
         try {
-            byte[] fileContent = certifService.getImageContent(id);
+            byte[] fileContent = courseService.getImageContent(id);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG); // Change the content type based on your file extension
             headers.setContentDispositionFormData("attachment", "image.jpg"); // Set the desired file title
@@ -74,7 +74,7 @@ public class CertifController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCertif(@PathVariable String id) {
-        certifService.deleteCertif(id);
+        courseService.deleteCertif(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

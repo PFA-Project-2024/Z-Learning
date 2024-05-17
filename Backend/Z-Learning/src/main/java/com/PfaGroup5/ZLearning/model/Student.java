@@ -1,17 +1,14 @@
 package com.PfaGroup5.ZLearning.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document()
-public class User {
-    @Id
+@Document
+public class Student {
     private String id;
-    private String userName;
-    private String password;
+    private String firstName;
+    private String lastName;
     private String email;
-
-
+    private String imagePath;
 }
