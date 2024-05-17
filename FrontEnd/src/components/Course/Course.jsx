@@ -1,5 +1,6 @@
 import styles from "./Course.module.css";
-import { useState } from 'react'
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -79,6 +80,11 @@ const courses = [
 ];
 
 function Course() {
+  const navigate = useNavigate();
+
+  const register = (category, courseId) => {
+    navigate(`/courses/${category}/${courseId}`);
+  }
 
   return (
     <div id="courses" className={styles.container}>
@@ -90,8 +96,9 @@ function Course() {
       <Carousel responsive={responsive}>
         {courses.map((course) => (
           <div key={course.id} className={styles.courseCardWrapper}>
-            <CourseCard title={course.title} desctiption={course.description}
-              price={course.price} category={course.category} rating={course.rating} image={course.image} url={course.url} />
+            <CourseCard courseId={course.id} title={course.title} desctiption={course.description}
+              price={course.price} category={course.category} rating={course.rating} 
+              image={course.image} url={course.url} register={()=>register(course.category, course.id)}/>
           </div>
         ))}
       </Carousel>
