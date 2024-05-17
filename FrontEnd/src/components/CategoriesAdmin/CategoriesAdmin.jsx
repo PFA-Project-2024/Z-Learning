@@ -1,42 +1,54 @@
 import styles from "./CategoriesAdmin.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 //Components
 import CategoryTable from "../CategoryTable/CategoryTable";
 import CategoryForm from "../CategoryForm/CategoryForm";
 
-const category = [
-  "Art",
-  "Architecture",
-  "Finance",
-  "Science",
-  "Psychologie",
-];
-
 function CategoriesAdmin() {
   const [formOpen, setFormOpen] = useState(false);
 
-  const setScroll = (val)=>{
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/categories');
+        setCategories(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [categories]);
+
+  const setScroll = (val) => {
     document.body.style.overflow = val ? 'scroll' : 'hidden';
   }
 
-  const addCategory = ()=>{
+  const addCategory = () => {
     setScroll(false);
     setFormOpen(true);
   }
 
-  const onAdd = ()=>{
+  const onAdd = () => {
     setScroll(true);
     setFormOpen(false);
   }
 
-  const onCancel = ()=>{
+  const onCancel = () => {
     setScroll(true);
     setFormOpen(false);
   }
 
-  const onDelete = (id) => {
-    alert(`Deleting ${id} ...`);
+  const onDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/admin/categories/${id}`);
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
   }
 
   return (
@@ -46,11 +58,11 @@ function CategoriesAdmin() {
         <button className="btn-v2" onClick={addCategory}>+ Ajouter une catégorie</button>
       </div>
       <div className={styles.body}>
-        <CategoryTable data={category} onDelete={onDelete} />
+        <CategoryTable data={categories} onDelete={onDelete} />
       </div>
 
-      {formOpen && 
-        <CategoryForm ADD={onAdd} CANCEL={onCancel}/>
+      {formOpen &&
+        <CategoryForm ADD={onAdd} CANCEL={onCancel} />
       }
     </div>
   )

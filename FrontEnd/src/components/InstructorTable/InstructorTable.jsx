@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './InstructorTable.module.css';
 
-const InstructorTable = ({ data, onDelete }) => {
+const InstructorTable = ({ data, onEdit, onDelete }) => {
     return (
         <table className={styles.container}>
             <thead>
@@ -14,7 +14,7 @@ const InstructorTable = ({ data, onDelete }) => {
             <tbody>
                 {data.map((item) => (
                     <tr key={item.id}>
-                        <td>{item.name}</td>
+                        <td>{`${item.firstName} ${item.lastName}`}</td>
                         <td>{item.profession}</td>
                         <td className={styles.action}>
                             <button onClick={() => onEdit(item)}>Modifier</button>

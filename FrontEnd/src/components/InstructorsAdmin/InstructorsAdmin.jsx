@@ -1,5 +1,6 @@
 import styles from "./InstructorsAdmin.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 //Components
 import InstructorTable from "../InstructorTable/InstructorTable";
@@ -28,11 +29,40 @@ const instructorsData = [
 function InstructorsAdmin() {
   const [formOpen, setFormOpen] = useState(false);
 
+  const [instructors, setInstructors] = useState([]);
+
+  const [instructorData, setInstructorData] = useState({
+    id: '',
+    firstName: '',
+    lastName: '',
+    profession: '',
+    image: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/instructors');
+        setInstructors(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [instructors]);
+
   const setScroll = (val)=>{
     document.body.style.overflow = val ? 'scroll' : 'hidden';
   }
 
   const addInstructor = ()=>{
+    setInstructorData({
+      firstName: '',
+      lastName: '',
+      profession: '',
+      image: '',
+    });
     setScroll(false);
     setFormOpen(true);
   }
@@ -48,11 +78,17 @@ function InstructorsAdmin() {
   }
 
   const onEdit = (item) => {
-    alert("Updating...\n" + item.title);
+    setInstructorData(item);
+    setScroll(false);
+    setFormOpen(true);
   }
 
-  const onDelete = (id) => {
-    alert(`Deleting ${id} ...`);
+  const onDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/admin/instructors/${id}`);
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
   }
 
   return (
@@ -62,11 +98,11 @@ function InstructorsAdmin() {
         <button className="btn-v2" onClick={addInstructor}>+ Ajouter un instructeur</button>
       </div>
       <div className={styles.body}>
-        <InstructorTable data={instructorsData} onEdit={onEdit} onDelete={onDelete} />
+        <InstructorTable data={instructors} onEdit={onEdit} onDelete={onDelete} />
       </div>
 
       {formOpen && 
-        <InstructorForm ADD={onAdd} CANCEL={onCancel}/>
+        <InstructorForm data={instructorData} ADD={onAdd} CANCEL={onCancel}/>
       }
     </div>
   )

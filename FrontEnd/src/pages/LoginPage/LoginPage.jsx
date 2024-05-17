@@ -1,15 +1,16 @@
 import styles from "./LoginPage.module.css";
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Implement your login logic here (e.g., API calls, authentication)
     console.log('Logging in with:', username, password);
-    // Redirect to the dashboard or home page after successful login
+    navigate("/admin");
   };
 
   return (

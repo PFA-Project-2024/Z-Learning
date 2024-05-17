@@ -79,9 +79,10 @@ public class InstructorService {
     public void deleteInstructor(String id){
         Instructor instructor = instructorRepo.findById(id).orElse(null);
         if (instructor != null) {
-            File file = new File(instructor.getImagePath());
-            file.delete();
+//            File file = new File(instructor.getImagePath());
+//            file.delete();
             instructorRepo.deleteById(id);
+
         }
     }
 

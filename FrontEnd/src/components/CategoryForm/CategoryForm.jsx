@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import styles from './CategoryForm.module.css';
+import axios from 'axios';
 
 function CategoryForm({ ADD, CANCEL }) {
   const [category, setCategory] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // (send data to backend)
-    console.log('Category data submitted:', category);
+    const categoryData = {
+      name: category,
+    };
+
+    try {
+      const val = await axios.post('http://localhost:8080/admin/categories', categoryData);
+    } catch (error) {
+      console.error('Error adding data:', error);
+    }
+
     ADD();
   };
 
@@ -16,7 +25,7 @@ function CategoryForm({ ADD, CANCEL }) {
       <div className={styles.card}>
         <h2 className={styles.cardTitle}>Catégorie</h2>
         <form onSubmit={handleSubmit}>
-          <input type="text" name="category" placeholder='Catégorie' value={category} onChange={(e)=>setCategory(e.target.value)} />
+          <input type="text" name="category" placeholder='Catégorie' value={category} onChange={(e) => setCategory(e.target.value)} />
         </form>
         <div className={styles.cardButtons}>
           <button type="submit" className={styles.cardOK} onClick={handleSubmit}>Ajouter</button>

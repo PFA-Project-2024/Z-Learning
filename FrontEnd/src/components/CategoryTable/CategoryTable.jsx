@@ -13,9 +13,9 @@ const CategoryTable = ({ data, onDelete }) => {
             <tbody>
                 {data.map((item, index) => (
                     <tr key={index}>
-                        <td>{item}</td>
+                        <td>{item.name}</td>
                         <td className={styles.action}>
-                            <button className='btn-warning' onClick={() => onDelete(index)}>Supprimer</button>
+                            <button className='btn-warning' onClick={() => onDelete(item.id)}>Supprimer</button>
                         </td>
                     </tr>
                 ))}
