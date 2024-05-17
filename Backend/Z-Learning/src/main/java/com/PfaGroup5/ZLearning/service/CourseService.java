@@ -94,6 +94,8 @@ public class CourseService {
         savedCourse.setURL(course.getURL());
         savedCourse.setMainImagePath(course.getMainImagePath());
         savedCourse.setDescription(course.getDescription());
+        savedCourse.setVideoUrl(course.getVideoUrl());
+        savedCourse.setQuizUrl(course.getQuizUrl());
 
         courseRepo.save(savedCourse);
 

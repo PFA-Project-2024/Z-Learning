@@ -6,9 +6,9 @@ const MyTable = ({ data, onEdit, onDelete }) => {
         <table className={styles.container}>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Titre</th>
                     <th>Catégorie</th>
+                    <th>Evaluation</th>
                     <th>Prix</th>
                     <th></th>
                 </tr>
@@ -16,9 +16,9 @@ const MyTable = ({ data, onEdit, onDelete }) => {
             <tbody>
                 {data.map((item) => (
                     <tr key={item.id}>
-                        <td>{item.id}</td>
                         <td>{item.title}</td>
-                        <td>{item.category}</td>
+                        <td>{item.categoryName}</td>
+                        <td>{item.rating}/5</td>
                         <td>{item.price}</td>
                         <td className={styles.action}>
                             <button onClick={() => onEdit(item)}>Modifier</button>

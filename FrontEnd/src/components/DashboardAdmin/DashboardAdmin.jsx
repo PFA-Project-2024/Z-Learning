@@ -68,7 +68,7 @@ function DashboardAdmin() {
                 />
                 <StateCard
                     title="Étudiants"
-                    number={dashboardData.studentsNr}
+                    number={100}
                     logo={<GroupsIcon />}
                     color="#53c132"
                 />
