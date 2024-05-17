@@ -1,15 +1,10 @@
-package com.PfaGroup5.ZLearning.Controller;
+package com.PfaGroup5.ZLearning.controller;
 
 import com.PfaGroup5.ZLearning.model.Category;
-import com.PfaGroup5.ZLearning.model.Certif;
+import com.PfaGroup5.ZLearning.model.Course;
 import com.PfaGroup5.ZLearning.service.CategoryService;
-import com.PfaGroup5.ZLearning.service.CertifService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +22,12 @@ public class CategoryController {
 
 
 
+    @PostMapping("/add")
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+
+        return  ResponseEntity.ok(categoryService.addCategory(category));
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
@@ -34,7 +35,7 @@ public class CategoryController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArrayList<Certif>> getAllCertifsByCategory(@PathVariable String id) {
+    public ResponseEntity<ArrayList<Course>> getAllCertifsByCategory(@PathVariable String id) {
         if (categoryService.getAllCertifsByCategory(id) != null) {
             return ResponseEntity.ok(categoryService.getAllCertifsByCategory(id));
         }
@@ -42,5 +43,6 @@ public class CategoryController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
 }

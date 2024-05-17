@@ -3,22 +3,27 @@ package com.PfaGroup5.ZLearning.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.ArrayList;
+import java.util.Date;
+
 @Data
 @Document
-public class Certif {
+public class Course {
     @Id
     String id;
     @Indexed(unique = true)
-    String name;
+    String title;
     String description;
     @Field( name ="image")
-    byte[] Mainimage;
+    String mainImagePath;
     Double price;
+    Date startDate;
+    String instructorName;
+    Date endDate;
     String categoryName;
+    Double rating;
+    String URL;
 
 }
