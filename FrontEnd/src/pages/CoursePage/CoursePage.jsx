@@ -22,21 +22,7 @@ function CoursesPage() {
   const [pop, setPop] = useState(false);
   const [id, setId] = useState('');
 
-  const [course, setCourse] = useState({
-    id: "66477b73e066da7225cadba7",
-    title: "Master en sciences de l'environnement",
-    description: "Le Master en sciences de l’environnement est un programme d’études supérieures axé sur l’étude approfondie des interactions entre l’environnement naturel et les activités humaines. Ce diplôme permet aux étudiants d’acquérir des connaissances avancées dans des domaines tels que la gestion des ressources naturelles, la conservation de la biodiversité, la durabilité environnementale et les politiques environnementales. Les diplômés du Master en sciences de l’environnement sont bien préparés pour des carrières dans la recherche, la gestion environnementale, la consultation et l’éducation.",
-    mainImagePath: "https://images.pexels.com/photos/4348404/pexels-photo-4348404.jpeg",
-    price: 599.99,
-    startDate: "2024-04-10T00:00:00.000+00:00",
-    instructorName: "Anwar Fernari",
-    endDate: "2025-05-16T00:00:00.000+00:00",
-    categoryName: "Science",
-    rating: 4,
-    videoUrl: "https://www.youtube.com/watch?v=Znzq_a3nasY",
-    quizUrl: "",
-    url: null
-  });
+  const [course, setCourse] = useState({});
 
   const setScroll = (val) => {
     document.body.style.overflow = val ? 'scroll' : 'hidden';

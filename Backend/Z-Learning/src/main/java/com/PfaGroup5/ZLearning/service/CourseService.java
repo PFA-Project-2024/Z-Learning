@@ -32,19 +32,19 @@ public class CourseService {
                 String.format("Cannot Find Certif by Name %s", course.getTitle())));
 
 
-        String categoryName = course.getCategoryName();
-        Category category = categoryRepo.findByName(categoryName);
-        if (category == null) {
-            // Create a new category
-            category = new Category();
-            category.setName(categoryName);
-            category.getCertifId().add(savedCourse.getId());
-            categoryRepo.insert(category);
-        } else {
-            // Add the certificate to the existing category
-            category.getCertifId().add(savedCourse.getId());
-            categoryRepo.save(category);
-        }
+//        String categoryName = course.getCategoryName();
+//        Category category = categoryRepo.findByName(categoryName);
+//        if (category == null) {
+//            // Create a new category
+//            category = new Category();
+//            category.setName(categoryName);
+//            category.getCertifId().add(savedCourse.getId());
+//            categoryRepo.insert(category);
+//        } else {
+//            // Add the certificate to the existing category
+//            category.getCertifId().add(savedCourse.getId());
+//            categoryRepo.save(category);
+//        }
 
 
 
