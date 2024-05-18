@@ -2,6 +2,7 @@ import styles from "./CoursesPage.module.css";
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 //components
 import Header from '../../components/Header/Header';
@@ -9,105 +10,21 @@ import Footer from '../../components/Footer/Footer';
 import CourseCard from '../../components/CourseCard/CourseCard';
 import PopUp from "../../components/PopUp/PopUp";
 
-//Temp Data
-const categories = [
-  "Architecture",
-  "Art",
-  "Finance",
-  "Psychologie",
-  "Science",
-];
-
-const coursesData = [
-  {
-    id: 1,
-    title: "Introduction à la science de l'environnement",
-    price: 499.99,
-    category: "Science",
-    rating: 5,
-    description: "Explorez l'impact des activités humaines sur l'environnement.",
-    image: "https://images.pexels.com/photos/6990475/pexels-photo-6990475.jpeg",
-    url: "#",
-    startDate: "",
-    endDate: "",
-    instructor: "",
-    urlVideo: "",
-    quizUrl: "",
-  },
-  {
-    id: 2,
-    title: "Éducation financière et finances personnelles",
-    price: 399.99,
-    category: "Finance",
-    rating: 4,
-    description: "Apprenez les compétences financières essentielles pour gérer l'argent et les investissements.",
-    image: "https://images.pexels.com/photos/6693661/pexels-photo-6693661.jpeg",
-    url: "#",
-    startDate: "",
-    endDate: "",
-    instructor: "",
-    urlVideo: "",
-    quizUrl: "",
-  },
-  {
-    id: 3,
-    title: "Introduction à la psychologie",
-    price: 999.99,
-    category: "Psychologie",
-    rating: 5,
-    description: "Découvrez les bases du comportement humain, de la cognition et des processus mentaux.",
-    image: "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg",
-    url: "#",
-    startDate: "",
-    endDate: "",
-    instructor: "",
-    urlVideo: "",
-    quizUrl: "",
-  },
-  {
-    id: 4,
-    title: "Introduction à l'histoire de l'art",
-    price: 199.99,
-    category: "Art",
-    rating: 4,
-    description: "Explorez les mouvements artistiques, les chefs-d'œuvre et les contextes culturels.",
-    image: "https://images.pexels.com/photos/375882/pexels-photo-375882.jpeg",
-    url: "#",
-    startDate: "",
-    endDate: "",
-    instructor: "",
-    urlVideo: "",
-    quizUrl: "",
-  },
-  {
-    id: 5,
-    title: "Introduction à l'architecture durable",
-    price: 879.99,
-    category: "Architecture",
-    rating: 5,
-    description: "Apprenez les principes de la conception et de la construction de bâtiments respectueux de l'environnement.",
-    image: "https://images.pexels.com/photos/6416349/pexels-photo-6416349.jpeg",
-    url: "#",
-    startDate: "",
-    endDate: "",
-    instructor: "",
-    urlVideo: "",
-    quizUrl: "",
-  },
-];
-
 function CoursesPage() {
   const params = useParams();
   const [pop, setPop] = useState(false);
+
+  const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
 
-  const filteredCourses = coursesData.filter((course) => {
+  const filteredCourses = courses.filter((course) => {
     const nameMatches = course.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const categoryMatches = selectedCategory === 'All' || course.category === selectedCategory;
+    const categoryMatches = selectedCategory === 'All' || course.categoryName === selectedCategory;
     const priceMatches = (course.price >= minPrice && course.price <= maxPrice);
     return nameMatches && categoryMatches && priceMatches;
   });
@@ -137,6 +54,32 @@ function CoursesPage() {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/categories');
+        setCategories(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [categories]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/courses');
+        setCourses(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [courses]);
+
   return (
     <>
       <Header />
@@ -153,9 +96,9 @@ function CoursesPage() {
           <ul className={styles.categoryList}>
             <label className={styles.subtitle}>CATÉGORIE</label>
             <li className={styles.listItem} onClick={() => setSelectedCategory("All")}><i>All Categories</i></li>
-            {categories.map((category, index) => (
-              <li className={styles.listItem} key={index} onClick={() => setSelectedCategory(category)}>
-                {category}
+            {categories.map((category) => (
+              <li className={styles.listItem} key={category.id} onClick={() => setSelectedCategory(category.name)}>
+                {category.name}
               </li>
             ))}
           </ul>
@@ -180,10 +123,10 @@ function CoursesPage() {
         <div className={styles.courses}>
           {filteredCourses.map((course) => (
             <CourseCard key={course.id} courseId={course.id} 
-                        title={course.title} image={course.image} 
-                        price={course.price} category={course.category} 
+                        title={course.title} image={course.mainImagePath} 
+                        price={course.price} category={course.categoryName} 
                         desctiption={course.description} rating={course.rating} 
-                        url={course.url} register={enroll}/>
+                        url={course.URL} register={enroll}/>
           ))}
         </div>
         {pop &&

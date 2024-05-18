@@ -27,10 +27,13 @@ export function ratingStars(number) {
 }
 
 export function formatDate(inputDate) {
-    const dateParts = inputDate.split('/');
-    const day = parseInt(dateParts[0], 10);
+    if(!inputDate)
+        return "-";
+    
+    const dateParts = inputDate.split('-');
+    const year = parseInt(dateParts[0], 10);
     const month = parseInt(dateParts[1], 10);
-    const year = parseInt(dateParts[2], 10);
+    const day = parseInt(dateParts[2], 10);
 
     const monthNames = [
         'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',

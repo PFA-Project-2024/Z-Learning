@@ -23,7 +23,8 @@ public class Course {
     String instructorName;
     Date endDate;
     String categoryName;
-    Double rating;
+    Integer rating;
     String URL;
-
+    String videoUrl;
+    String quizUrl;
 }
