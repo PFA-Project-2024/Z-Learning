@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CourseForm.module.css';
+import axios from 'axios';
 
 function CourseForm({ ADD, CANCEL }) {
+  const [categories, setCategories] = useState([]);
+  const [instructors, setInstructors] = useState([]);
   const [courseData, setCourseData] = useState({
     title: '',
     price: '',
-    category: '',
+    categoryName: '',
     rating: '',
     description: '',
-    image: '',
+    mainImagePath: '',
     url: '',
     startDate: '',
     endDate: '',
-    instructor: '',
-    urlVideo: '',
+    instructorName: '',
+    videoUrl: '',
     quizUrl: '',
   });
 
@@ -22,12 +25,43 @@ function CourseForm({ ADD, CANCEL }) {
     setCourseData({ ...courseData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to backend)
-    console.log('Course data submitted:', courseData);
+
+    try {
+      axios.post('http://localhost:8080/admin/courses', courseData);
+    } catch (error) {
+      console.error('Error adding data:', error);
+    }
+
     ADD();
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/categories');
+        setCategories(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/instructors');
+        setInstructors(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [instructors]);
 
   return (
     <div className={styles.container}>
@@ -40,16 +74,17 @@ function CourseForm({ ADD, CANCEL }) {
           <input type="number" name="rating" min="1" max="5" placeholder='Evaluation (1-5)' value={courseData.rating} onChange={handleInputChange} />
           <label>
             Catégorie:<br />
-            <select name="category" value={courseData.category} onChange={handleInputChange}>
-              <option value="web">Web Development</option>
-              <option value="design">Design</option>
-              <option value="data">Data Science</option>
+            <select name="categoryName" value={courseData.categoryName} onChange={handleInputChange}>
+              {categories.map((item) => (
+                <option key={item.id} value={item.name}>{item.name}</option>
+              ))}
             </select>
           </label>
           <label>
-            Image:<br />
-            <input type="file" name="image" value={courseData.image} onChange={handleInputChange} />
+            Image:
           </label>
+          {/* <input type="file" name="image" value={courseData.image} onChange={handleInputChange} /> */}
+          <input type="text" name="mainImagePath" placeholder='Image Url' value={courseData.mainImagePath} onChange={handleInputChange} />
           <label>
             Date de début - Date de fin:<br />
             <div className={styles.dateContainer}>
@@ -61,13 +96,13 @@ function CourseForm({ ADD, CANCEL }) {
 
           <label>
             Instructeur:<br />
-            <select name="instructor" value={courseData.instructor} onChange={handleInputChange}>
-              <option value="ahmed">Ahmed Mohamed</option>
-              <option value="yassine">Yassine Elmohssine</option>
-              <option value="selma">Selma Nezhari</option>
+            <select name="instructorName" value={courseData.instructorName} onChange={handleInputChange}>
+              {instructors.map((item) => (
+                <option key={item.id} value={`${item.firstName} ${item.lastName}`}>{`${item.firstName} ${item.lastName}`}</option>
+              ))}
             </select>
           </label>
-          <input type="text" name="urlVideo" placeholder='Video URL' value={courseData.urlVideo} onChange={handleInputChange} />
+          <input type="text" name="urlVideo" placeholder='Video URL' value={courseData.videoUrl} onChange={handleInputChange} />
           <input type="text" name="quizUrl" placeholder='Quiz URL' value={courseData.quizUrl} onChange={handleInputChange} />
         </form>
         <div className={styles.cardButtons}>
