@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 //components
 import CustomLink from "../CustomLink/CustomLink";
@@ -14,13 +15,20 @@ function Header() {
     navigate(path);
   };
 
-  const category = [
-    "Art",
-    "Architecture",
-    "Finance",
-    "Science",
-    "Psychologie",
-  ];
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const val = await axios.get('http://localhost:8080/admin/categories');
+        setCategories(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [categories]);
 
   const coursToggle = (e)=>{
     e.preventDefault();
@@ -54,8 +62,8 @@ function Header() {
       {/* Courses sub-navbar */}
       {isPanelVisible && (
       <div className={styles.panel}>
-        {category.map((c, index)=>(
-          <a key={index} href={`/courses/${c}`}>{c}</a>
+        {categories.map((c)=>(
+          <a key={c.id} href={`/courses/${c.name}`}>{c.name}</a>
         ))}
       </div>
       )}
