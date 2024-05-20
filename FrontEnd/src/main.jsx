@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //Pages
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import CoursesPage from './pages/CoursesPage/CoursesPage.jsx';
 import CoursePage from './pages/CoursePage/CoursePage.jsx';
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         element: <InstructorsAdmin />,
       },
     ]
+  },
+  {
+    path: "profile",
+    element: <ProfilePage />,
   },
   {
     path: "courses",
