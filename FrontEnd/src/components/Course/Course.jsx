@@ -29,6 +29,11 @@ const responsive = {
 function Course() {
   const [courses, setCourses] = useState([]);
 
+  const getNearCourses = ()=>{
+    const sortedCourses = courses.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+    return sortedCourses.slice(0, 3);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,16 +50,17 @@ function Course() {
   return (
     <div id="courses" className={styles.container}>
       <div className={styles.title}>
-        <h2>Cours les plus populaires</h2>
+        <h2>Cours les plus proches</h2>
         <p>“Un apprentissage fluide pour tous, où que vous soyez” 🌐</p>
       </div>
 
       <Carousel responsive={responsive}>
-        {courses.map((course) => (
+        {getNearCourses().map((course) => (
           <div key={course.id} className={styles.courseCardWrapper}>
-            <CourseCard courseId={course.id} title={course.title} desctiption={course.description}
+            {/* <CourseCard courseId={course.id} title={course.title} desctiption={course.description}
               price={course.price} category={course.categoryName} rating={course.rating} 
-              image={course.mainImagePath} url={course.URL} />
+              image={course.mainImagePath} url={course.URL} /> */}
+              <CourseCard course={course} />
           </div>
         ))}
       </Carousel>

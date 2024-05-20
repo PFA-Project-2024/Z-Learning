@@ -120,7 +120,7 @@ function CoursesPage() {
                   alt="instructor profile" />
               </div>
               <div>
-                <p className={styles.intructorName}>Instructor name</p>
+                <p className={styles.intructorName}>{course.instructorName}</p>
                 <p className={styles.intructorTagline}>Instructor departement</p>
               </div>
             </div>
