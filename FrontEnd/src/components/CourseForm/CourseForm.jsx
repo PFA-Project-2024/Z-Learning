@@ -2,9 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styles from './CourseForm.module.css';
 import axios from 'axios';
 
-function CourseForm({ ADD, CANCEL }) {
+//Utils
+import {convertDateFormat} from '../../utils/helpers';
+
+function EmptyData(data) {
+  return data.title !== '';
+}
+
+function CourseForm({ data, ADD, CANCEL }) {
   const [categories, setCategories] = useState([]);
   const [instructors, setInstructors] = useState([]);
+
+  const [id, setId] = useState('');
   const [courseData, setCourseData] = useState({
     title: '',
     price: '',
@@ -36,6 +45,23 @@ function CourseForm({ ADD, CANCEL }) {
 
     ADD();
   };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
+    try {
+      axios.put(`http://localhost:8080/admin/courses/${id}`, courseData);
+    } catch (error) {
+      console.error('Error editing data:', error);
+    }
+
+    ADD();
+  };
+
+  useEffect(()=>{
+    setId(data.id);
+    setCourseData(data);
+  },[]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,9 +114,9 @@ function CourseForm({ ADD, CANCEL }) {
           <label>
             Date de début - Date de fin:<br />
             <div className={styles.dateContainer}>
-              <input type="date" name="startDate" value={courseData.startDate} onChange={handleInputChange} />
+              <input type="date" name="startDate" value={convertDateFormat(courseData.startDate)} onChange={handleInputChange} />
               <p>-</p>
-              <input type="date" name="endDate" value={courseData.endDate} onChange={handleInputChange} />
+              <input type="date" name="endDate" value={convertDateFormat(courseData.endDate)} onChange={handleInputChange} />
             </div>
           </label>
 
@@ -106,7 +132,12 @@ function CourseForm({ ADD, CANCEL }) {
           <input type="text" name="quizUrl" placeholder='Quiz URL' value={courseData.quizUrl} onChange={handleInputChange} />
         </form>
         <div className={styles.cardButtons}>
-          <button type="submit" className={styles.cardOK} onClick={handleSubmit}>Ajouter</button>
+          {
+            EmptyData(data) ?
+              <button type="submit" className={styles.cardOK} onClick={handleEdit}>Modifier</button>
+              :
+              <button type="submit" className={styles.cardOK} onClick={handleSubmit}>Ajouter</button>
+          }
           {CANCEL &&
             <button className={styles.cardCancel} onClick={CANCEL}>Annuler</button>}
         </div>

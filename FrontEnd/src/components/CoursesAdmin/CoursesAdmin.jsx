@@ -12,9 +12,18 @@ function CoursesAdmin() {
   const [courses, setCourses] = useState([]);
 
   const [courseData, setCourseData] = useState({
-    id: '',
     title: '',
-    image: '',
+    description: '',
+    mainImagePath: '',
+    price: '',
+    startDate: '',
+    instructorName: '',
+    endDate: '',
+    categoryName: 'Art',
+    rating: '',
+    videoUrl: '',
+    quizUrl: '',
+    url: ''
   });
 
   useEffect(() => {
@@ -35,6 +44,20 @@ function CoursesAdmin() {
   }
 
   const addCourse = ()=>{
+    setCourseData({
+      title: '',
+      description: '',
+      mainImagePath: '',
+      price: '',
+      startDate: '',
+      instructorName: '',
+      endDate: '',
+      categoryName: 'Art',
+      rating: '',
+      videoUrl: '',
+      quizUrl: '',
+      url: ''
+    });
     setScroll(false);
     setFormOpen(true);
   }
@@ -50,11 +73,18 @@ function CoursesAdmin() {
   }
 
   const onEdit = (item) => {
-    alert("Updating...\n" + item.title);
+    setCourseData(item);
+    setScroll(false);
+    setFormOpen(true);
   }
 
-  const onDelete = (id) => {
-    alert(`Deleting ${id} ...`);
+  const onDelete = async (id) => {
+    console.log(id);
+    try {
+      await axios.delete(`http://localhost:8080/admin/courses/${id}`);
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
   }
 
   return (
@@ -68,7 +98,7 @@ function CoursesAdmin() {
       </div>
 
       {formOpen && 
-        <CourseForm ADD={onAdd} CANCEL={onCancel}/>
+        <CourseForm data={courseData} ADD={onAdd} CANCEL={onCancel}/>
       }
     </div>
   )

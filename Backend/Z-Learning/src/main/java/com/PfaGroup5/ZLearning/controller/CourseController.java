@@ -39,9 +39,9 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCertifByName(name));
     }
 
-    @PutMapping
-    public ResponseEntity updateCertif(@RequestBody Course course) {
-        courseService.updateCertif(course);
+    @PutMapping("/{id}")
+    public ResponseEntity updateCertif(@PathVariable String id, @RequestBody Course course) {
+        courseService.updateCertif(id, course);
         return ResponseEntity.ok().build();
     }
 
