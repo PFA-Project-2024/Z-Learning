@@ -122,11 +122,7 @@ function CoursesPage() {
         </div>
         <div className={styles.courses}>
           {filteredCourses.map((course) => (
-            <CourseCard key={course.id} courseId={course.id} 
-                        title={course.title} image={course.mainImagePath} 
-                        price={course.price} category={course.categoryName} 
-                        desctiption={course.description} rating={course.rating} 
-                        url={course.URL} register={enroll}/>
+            <CourseCard key={course.id} course={course} register={enroll}/>
           ))}
         </div>
         {pop &&

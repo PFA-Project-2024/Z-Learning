@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //Pages
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import CoursesPage from './pages/CoursesPage/CoursesPage.jsx';
 import CoursePage from './pages/CoursePage/CoursePage.jsx';
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     ]
   },
   {
+    path: "profile",
+    element: <ProfilePage />,
+  },
+  {
     path: "courses",
     element: <CoursesPage />,
   },
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
   {
     path: "courses/:category/:id",
     element: <CoursePage />,
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

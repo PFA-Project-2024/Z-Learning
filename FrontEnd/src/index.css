@@ -14,6 +14,7 @@
   --green: #127c71;
   --dark-green: #126c63;
   --yellow: #ffaf35;
+  --dark-yellow: #e49c30;
   --pink: #f303ff;
   --purple: #551a8b;
   --red: #ed1749;
@@ -112,6 +113,16 @@ button:hover {
 
 .btn-warning:hover{
   background-color: var(--dark-red);
+}
+
+.btn-info{
+  color: var(--red);
+  background-color: var(--white);
+  border: 2px solid var(--red);
+}
+
+.btn-info:hover{
+  background-color: var(--black);
 }
 
 .green

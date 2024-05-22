@@ -27,9 +27,9 @@ export function ratingStars(number) {
 }
 
 export function formatDate(inputDate) {
-    if(!inputDate)
+    if (!inputDate)
         return "-";
-    
+
     const dateParts = inputDate.split('-');
     const year = parseInt(dateParts[0], 10);
     const month = parseInt(dateParts[1], 10);
@@ -44,5 +44,14 @@ export function formatDate(inputDate) {
 
     const formattedDate = `${formattedMonth} ${day}, ${year}`;
 
+    return formattedDate;
+}
+
+export function convertDateFormat(inputDate) {
+    if (!inputDate)
+        return "";
+
+    const isoDate = new Date(inputDate);
+    const formattedDate = isoDate.toISOString().substring(0, 10);
     return formattedDate;
 }

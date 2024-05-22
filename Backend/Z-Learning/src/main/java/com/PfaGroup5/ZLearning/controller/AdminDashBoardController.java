@@ -131,9 +131,9 @@ public class AdminDashBoardController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/courses/")
-    public ResponseEntity updateCertif(@RequestBody Course course) {
-        courseService.updateCertif(course);
+    @PutMapping("/courses/{id}")
+    public ResponseEntity updateCertif(@PathVariable String id, @RequestBody Course course) {
+        courseService.updateCertif(id, course);
         return ResponseEntity.ok().build();
     }
 

@@ -1,5 +1,5 @@
 .container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -13,7 +13,7 @@
 
 .card {
     background-color: var(--white);
-    width: 400px;
+    width: 1000px;
     padding: 14px 8px;
     border-radius: 8px;
 
@@ -27,29 +27,28 @@
     padding-bottom: 10px;
 }
 
-.cardButtons {
-    margin-top: 14px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.cardOK {
-    width: 198px;
-}
-
-.cardCancel {
-    width: 198px;
-    background-color: var(--red);
-}
-
-.cardCancel:hover {
-    background-color: var(--dark-red);
-}
-
 /* Form */
-.container form {
+.formContainer
+{
+    display: flex;
+}
+
+.formLeft
+{
+    flex: 5;
     display: flex;
     flex-direction: column;
+
+    margin-right: 5px;
+}
+
+.formRight
+{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 5px;
 }
 
 .container label {
@@ -58,12 +57,23 @@
 }
 
 .container input,
-.container textarea,
 .container select {
     padding: 8px;
     margin-bottom: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.formContainer textarea
+{
+    min-width: 620px;
+    max-width: 620px;
+    height: 200px;
+    min-height: 200px;
+    max-height: 250px;
+
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .container input[type="file"]{
@@ -83,4 +93,34 @@
 {
     display: flex;
     justify-content: space-between;
+}
+
+.imageHolder
+{
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Buttons Container */
+.cardButtons {
+    margin-top: auto;
+    display: flex;
+    justify-content: end;
+}
+
+.cardOK {
+    width: 100%;
+}
+
+
+.cardCancel {
+    width: 100%;
+    margin-left: 8px;
+    background-color: var(--red);
+}
+
+.cardCancel:hover {
+    background-color: var(--dark-red);
 }

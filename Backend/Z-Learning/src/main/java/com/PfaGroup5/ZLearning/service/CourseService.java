@@ -58,32 +58,34 @@ public class CourseService {
         return courseRepo.findByTitle(name).orElse(null);
     }
 
-    public void updateCertif(Course course) {
+    public void updateCertif(String id, Course course) {
         // when updating a certificate, we need to update the category as well if the category title has changed
         // so we need to check if the category title has changed
-        Course savedCourse = courseRepo.findByTitle(course.getTitle())
+        Course savedCourse = courseRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot Find Certif by Name %s", course.getTitle())));
-        String oldCategoryName = savedCourse.getCategoryName();
-        String newCategoryName = course.getCategoryName();
-        Category cat = categoryRepo.findByName(newCategoryName);
-        if(cat == null) {
-            Category category = new Category();
-            category.setName(newCategoryName);
-            categoryRepo.insert(category);
-        }
+                        String.format("Cannot Find Course by Id: %s", id)));
 
-        if(!Objects.equals(oldCategoryName ,newCategoryName )){
+//        String oldCategoryName = savedCourse.getCategoryName();
+//        String newCategoryName = course.getCategoryName();
+//        Category cat = categoryRepo.findByName(newCategoryName);
+//        if(cat == null) {
+//            Category category = new Category();
+//            category.setName(newCategoryName);
+//            categoryRepo.insert(category);
+//        }
+//
+//        if(!Objects.equals(oldCategoryName ,newCategoryName )){
+//
+//            Category cat1 = categoryRepo.findByName(oldCategoryName);
+//            cat1.getCertifId().remove(savedCourse.getId());
+//            categoryRepo.save(cat1);
+//          //categoryRepo.findByName(newCategoryName).getCertifId().add(savedCertif.getId());
+//            Category cat2 = categoryRepo.findByName(newCategoryName);
+//            cat2.getCertifId().add(savedCourse.getId());
+//            categoryRepo.save(cat2);
+//
+//        }
 
-            Category cat1 = categoryRepo.findByName(oldCategoryName);
-            cat1.getCertifId().remove(savedCourse.getId());
-            categoryRepo.save(cat1);
-          //categoryRepo.findByName(newCategoryName).getCertifId().add(savedCertif.getId());
-            Category cat2 = categoryRepo.findByName(newCategoryName);
-            cat2.getCertifId().add(savedCourse.getId());
-            categoryRepo.save(cat2);
-
-        }
         savedCourse.setTitle(course.getTitle());
         savedCourse.setCategoryName(course.getCategoryName());
         savedCourse.setPrice(course.getPrice());
@@ -98,9 +100,6 @@ public class CourseService {
         savedCourse.setQuizUrl(course.getQuizUrl());
 
         courseRepo.save(savedCourse);
-
-
-
     }
     public void storeImage(String certifId, MultipartFile file) {
         Course course = courseRepo.findById(certifId).orElseThrow(() -> new RuntimeException(
