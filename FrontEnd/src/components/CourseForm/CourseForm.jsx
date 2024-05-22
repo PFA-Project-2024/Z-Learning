@@ -8,11 +8,16 @@ import { convertDateFormat } from '../../utils/helpers';
 //Images
 import Placeholder from '../../assets/images/placeholder.png';
 
+//Components
+import RichTextEditor from '../RichTextEditor/RichTextEditor';
+
 function EmptyData(data) {
   return data.title !== '';
 }
 
 function CourseForm({ data, ADD, CANCEL }) {
+  const [content, setContent] = useState('');
+
   const [categories, setCategories] = useState([]);
   const [instructors, setInstructors] = useState([]);
 
@@ -92,6 +97,8 @@ function CourseForm({ data, ADD, CANCEL }) {
     fetchData();
   }, [instructors]);
 
+
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -103,7 +110,11 @@ function CourseForm({ data, ADD, CANCEL }) {
             <label>
               Description:
             </label>
-            <textarea name="description" placeholder='Description...' value={courseData.description} onChange={handleInputChange} />
+            {/* <textarea name="description" placeholder='Description...' value={courseData.description} onChange={handleInputChange} /> */}
+            
+            <RichTextEditor content={content} />
+
+
           </div>
           <div className={styles.formRight}>
             <input type="text" name="title" placeholder='Titre' value={courseData.title} onChange={handleInputChange} />
