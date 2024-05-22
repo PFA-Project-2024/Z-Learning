@@ -1,5 +1,5 @@
 .container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -68,8 +68,9 @@
 {
     min-width: 620px;
     max-width: 620px;
+    height: 200px;
     min-height: 200px;
-    max-height: 200px;
+    max-height: 250px;
 
     padding: 10px;
     border-radius: 8px;

@@ -15,6 +15,12 @@
     border-radius: 8px;
 }
 
+.descriptionContainer
+{
+    border: 0 !important;
+    height: max-content !important;
+}
+
 .side {
     flex: 2;
     background-color: rgb(233, 241, 237);
