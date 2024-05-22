@@ -58,13 +58,13 @@ function CoursesPage() {
     };
 
     fetchData();
-  }, []);
+  }, [course]);
 
   return (
     <>
       <Header />
       <div className={styles.container}>
-      <div className={styles.main}>
+        <div className={styles.main}>
           <div className={styles.navPath}>
             <a href="/courses">Courses</a> / <a href={`/courses/${course.categoryName}`}>{course.categoryName}</a> / <b>{course.title}</b>
           </div>
@@ -77,7 +77,9 @@ function CoursesPage() {
               alt="Course Thumbnail"
             />
             <h3>À propos de ce cours</h3>
-            <p>{course.description}</p>
+
+            <div className={`tiptap ${styles.descriptionContainer}`} dangerouslySetInnerHTML={{ __html: course.description }}></div>
+          
           </div>
           {course.videoUrl &&
             <div className={styles.courseVideo}>

@@ -16,8 +16,6 @@ function EmptyData(data) {
 }
 
 function CourseForm({ data, ADD, CANCEL }) {
-  const [content, setContent] = useState('');
-
   const [categories, setCategories] = useState([]);
   const [instructors, setInstructors] = useState([]);
 
@@ -41,6 +39,10 @@ function CourseForm({ data, ADD, CANCEL }) {
     const { name, value } = e.target;
     setCourseData({ ...courseData, [name]: value });
   };
+
+  const handleContentChange = (value) =>{
+    setCourseData({ ...courseData, ["description"]: value });
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,8 +99,6 @@ function CourseForm({ data, ADD, CANCEL }) {
     fetchData();
   }, [instructors]);
 
-
-
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -110,11 +110,7 @@ function CourseForm({ data, ADD, CANCEL }) {
             <label>
               Description:
             </label>
-            {/* <textarea name="description" placeholder='Description...' value={courseData.description} onChange={handleInputChange} /> */}
-            
-            <RichTextEditor content={content} />
-
-
+            <RichTextEditor content={courseData.description} setContent={handleContentChange}/>
           </div>
           <div className={styles.formRight}>
             <input type="text" name="title" placeholder='Titre' value={courseData.title} onChange={handleInputChange} />

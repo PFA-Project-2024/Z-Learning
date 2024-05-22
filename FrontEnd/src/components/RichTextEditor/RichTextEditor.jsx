@@ -82,8 +82,10 @@ const extensions = [
   }),
 ]
 
-export default ({ content }) => {
+export default ({ content, setContent}) => {
   return (
-    <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}></EditorProvider>
+    <EditorProvider key={content} slotBefore={<MenuBar />} extensions={extensions} content={content} onBlur={({ editor }) => {
+      setContent(editor.getHTML());
+    }}></EditorProvider>
   )
 }
