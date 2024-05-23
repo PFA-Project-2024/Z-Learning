@@ -1,6 +1,9 @@
 import styles from './AdminPage.module.css';
 import { useNavigate, Outlet } from "react-router-dom";
 
+//images
+import Logo from "../../assets/images/graduation-hat.png";
+
 export default function AdminPage() {
   const navigate = useNavigate();
 
@@ -12,8 +15,11 @@ export default function AdminPage() {
     <div>
       <div className={styles.container}>
         <div className={styles.navbar}>
-          <a href="/admin">ZLearning</a>
-          <button className="btn-v2" onClick={()=>handleNavigate("/login")}>Logout</button>
+          <a href="/admin">
+            <img src={Logo} alt="ZLearning logo" />
+            ZLearning
+          </a>
+          <button className="btn-v2" onClick={() => handleNavigate("/login")}>Logout</button>
         </div>
 
         <div className={styles.body}>

@@ -6,6 +6,9 @@ import axios from 'axios';
 //components
 import CustomLink from "../CustomLink/CustomLink";
 
+//images
+import Logo from "../../assets/images/graduation-hat.png";
+
 function Header() {
   const [isPanelVisible, setPanelVisible] = useState(false);
 
@@ -39,7 +42,10 @@ function Header() {
     <div>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <a href="/">ZLearning</a>
+          <a href="/">
+            <img src={Logo} alt="ZLearning logo" />
+            ZLearning
+          </a>
         </div>
 
         <div className={styles.list}>
