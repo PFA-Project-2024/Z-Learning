@@ -39,20 +39,20 @@ function ProfilePage() {
             <div>
               <p className={styles.userDetail}>Nom:</p>
               <div className={styles.userdata}>
-                <input className={styles.input} type="text" name="lastName" placeholder="Nom" value={user.lastName} onChange={handleInputChange} />
+                <input className={styles.input} type="text" name="lastName" placeholder="Nom" value={user.lastName} onChange={handleInputChange} readOnly={true}/>
               </div>
               <p className={styles.userDetail}>Prénom:</p>
               <div className={styles.userdata}>
-                <input className={styles.input} type="text" name="firstName" placeholder="Prenom" value={user.firstName} onChange={handleInputChange} />
+                <input className={styles.input} type="text" name="firstName" placeholder="Prenom" value={user.firstName} onChange={handleInputChange} readOnly={true}/>
               </div>
             </div>
             <p className={styles.userDetail}>Adresse e-mail:</p>
             <div className={styles.userdata}>
-              <input className={styles.input} type="email" name="email" placeholder="user@example.com" value={user.email} onChange={handleInputChange} />
+              <input className={styles.input} type="email" name="email" placeholder="user@example.com" value={user.email} onChange={handleInputChange} readOnly={true}/>
             </div>
             <p className={styles.userDetail}>Numéro de téléphone:</p>
             <div className={styles.userdata}>
-            <input className={styles.input} type="number" name="phoneNumber" placeholder="0612-333-321" value={user.phone} onChange={handleInputChange} />
+            <input className={styles.input} type="number" name="phoneNumber" placeholder="0612-333-321" value={user.phone} onChange={handleInputChange} readOnly={true}/>
             </div>
           </div>
         </div>
