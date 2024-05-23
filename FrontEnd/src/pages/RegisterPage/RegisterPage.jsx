@@ -1,6 +1,9 @@
 import styles from "./RegisterPage.module.css";
 import { useState } from 'react';
 
+//components
+import Logo from "../../components/Logo/Logo";
+
 function RegisterPage() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -16,6 +19,7 @@ function RegisterPage() {
 
   return (
     <div className={styles.registrationContainer}>
+      <Logo />
       <form className={styles.registrationForm}>
         <h1>Inscription</h1>
         <input

@@ -81,7 +81,7 @@ function CoursesPage() {
             <div className={`tiptap ${styles.descriptionContainer}`} dangerouslySetInnerHTML={{ __html: course.description }}></div>
           
           </div>
-          {course.videoUrl &&
+          {/* {course.videoUrl &&
             <div className={styles.courseVideo}>
               <h3>Enregistrement vidéo du cours</h3>
               <ReactPlayer
@@ -90,7 +90,7 @@ function CoursesPage() {
                 height="100%"
                 controls />
             </div>
-          }
+          } */}
         </div>
         <div className={styles.side}>
           {/* Course Info */}

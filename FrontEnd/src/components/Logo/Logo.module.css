@@ -1,0 +1,31 @@
+.container
+{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+
+.container a
+{
+    font-size: 34px;
+    color: var(--green);
+}
+
+.logo
+{
+    display: flex;
+}
+
+.logo img
+{
+    width: 52px;
+}
+
+.curve
+{
+    width: 144px;
+
+    position: relative;
+    bottom: 20px;
+    left: 32px;
+}

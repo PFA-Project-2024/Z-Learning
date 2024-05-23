@@ -2,6 +2,9 @@ import styles from "./LoginPage.module.css";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
+//components
+import Logo from "../../components/Logo/Logo";
+
 function LoginPage() {
   const navigate = useNavigate();
 
@@ -15,6 +18,7 @@ function LoginPage() {
 
   return (
     <div className={styles.loginContainer}>
+      <Logo />
       <form className={styles.loginForm}>
         <h1>Connexion</h1>
         <input
