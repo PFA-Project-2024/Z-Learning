@@ -55,3 +55,17 @@ export function convertDateFormat(inputDate) {
     const formattedDate = isoDate.toISOString().substring(0, 10);
     return formattedDate;
 }
+
+export function checkDateRange(startDate, endDate) {
+    const today = new Date().toISOString();;
+    startDate = new Date(startDate).toISOString();
+    endDate = new Date(endDate).toISOString();
+
+    if (today < startDate) {
+        return 2; // coming soon
+    } else if (today >= startDate && today <= endDate) {
+        return 1; // going
+    } else {
+        return 3; // ended
+    }
+}

@@ -10,6 +10,7 @@ import CustomLink from "../CustomLink/CustomLink";
 import Logo from "../../assets/images/graduation-hat.png";
 
 function Header() {
+  const [isSession, setIsSession] = useState(true);
   const [isPanelVisible, setPanelVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -51,9 +52,11 @@ function Header() {
         <div className={styles.list}>
           <ul>
             <li><CustomLink href="/#home">Accueil</CustomLink></li>
-            <li onClick={coursToggle}>
-                <CustomLink href="">Cours</CustomLink>
-            </li>
+            <li onClick={coursToggle}> <CustomLink href="">Cours</CustomLink></li>
+            {
+              isSession &&
+              <li><CustomLink href="/sessions">Sessions</CustomLink></li>
+            }
             <li><CustomLink href="/#about">À propos</CustomLink></li>
             <li><CustomLink href="/#newsletter">Newsletter</CustomLink></li>
           </ul>

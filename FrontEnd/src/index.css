@@ -22,6 +22,10 @@
   --blue: #0063ff;
   --black: #0000001f;
 
+  --alert-red: #fd2255;
+  --alert-yellow: #edbb17;
+  --alert-green: #09c0ae;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
