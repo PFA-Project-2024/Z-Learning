@@ -1,49 +1,63 @@
 import styles from "./ProfilePage.module.css";
 
+//images
+import User from "../../assets/images/user.png";
+
 //Components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { useState } from "react";
 
 function ProfilePage() {
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
   return (
     <>
-    <Header />
+      <Header />
 
-    <div className={styles.container}>
-            <div className={styles.card}>
-                <div className={styles.cardBody}>
-                    <div className={styles.profilePicContainer}>
-                        <img 
-                            src="https://bootdey.com/img/Content/avatar/avatar7.png" 
-                            alt="User" 
-                            className={styles.profilePic} 
-                        />
-                    </div>
-                    <div className={styles.userDetails}>
-                        <h2 className={styles.userName}>John Doe</h2>
-                        <p className={styles.userDetail}>Full Name:</p>
-                        <div className={styles.userdata}>
-                        <p className={styles.userDetail}>John Doe</p>
-                        </div>
-                        <p className={styles.userDetail}>Email:</p>
-                        <div className={styles.userdata}>
-                        <p className={styles.userDetail}>johndoe@example.com</p>
-                        </div>
-                        <p className={styles.userDetail}>Phone:</p>
-                        <div className={styles.userdata}>
-                        <p className={styles.userDetail}>+212 1234-7890</p>
-                        </div>
-                        <p className={styles.userDetail}>Mot de passe:</p>
-                        <div className={styles.userdata}>
-                        <p className={styles.userDetail}>••••••••</p>
-                        </div>
-                    </div>
-                </div>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.profilePicContainer}>
+            <img
+              src={User}
+              alt="User"
+              className={styles.profilePic}
+            />
+            <h2 className={styles.userName}>{`${user.firstName} ${user.lastName}`}</h2>
+          </div>
+          <div className={styles.userDetails}>
+            <div>
+              <p className={styles.userDetail}>Nom:</p>
+              <div className={styles.userdata}>
+                <input className={styles.input} type="text" name="lastName" placeholder="Nom" value={user.lastName} onChange={handleInputChange} />
+              </div>
+              <p className={styles.userDetail}>Prénom:</p>
+              <div className={styles.userdata}>
+                <input className={styles.input} type="text" name="firstName" placeholder="Prenom" value={user.firstName} onChange={handleInputChange} />
+              </div>
             </div>
+            <p className={styles.userDetail}>Adresse e-mail:</p>
+            <div className={styles.userdata}>
+              <input className={styles.input} type="email" name="email" placeholder="user@example.com" value={user.email} onChange={handleInputChange} />
+            </div>
+            <p className={styles.userDetail}>Numéro de téléphone:</p>
+            <div className={styles.userdata}>
+            <input className={styles.input} type="number" name="phoneNumber" placeholder="0612-333-321" value={user.phone} onChange={handleInputChange} />
+            </div>
+          </div>
         </div>
-    
-    
-    <Footer />
+      </div>
+      <Footer />
     </>
   );
 }

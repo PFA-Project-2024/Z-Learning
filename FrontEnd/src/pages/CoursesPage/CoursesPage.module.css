@@ -1,7 +1,7 @@
 .coursesContainer {
     display: flex;
     margin-top: 20px;
-    background-color: rgb(233, 241, 237);
+    background-color: #e9f1ed;
 }
 
 .filters 
