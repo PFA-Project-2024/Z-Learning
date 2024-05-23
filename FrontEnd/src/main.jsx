@@ -10,6 +10,8 @@ import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import CoursesPage from './pages/CoursesPage/CoursesPage.jsx';
 import CoursePage from './pages/CoursePage/CoursePage.jsx';
+import SessionsPage from './pages/SessionsPage/SessionsPage.jsx';
+import SessionPage from './pages/SessionPage/SessionPage.jsx';
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import AdminPage from "./pages/AdminPage/AdminPage.jsx";
 import CoursesAdmin from './components/CoursesAdmin/CoursesAdmin.jsx';
@@ -68,7 +70,15 @@ const router = createBrowserRouter([
   {
     path: "courses/:category/:id",
     element: <CoursePage />,
-  }
+  },
+  {
+    path: "sessions",
+    element: <SessionsPage />,
+  },
+  {
+    path: "session/:id",
+    element: <SessionPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -40,7 +40,7 @@ function CourseForm({ data, ADD, CANCEL }) {
     setCourseData({ ...courseData, [name]: value });
   };
 
-  const handleContentChange = (value) =>{
+  const handleContentChange = (value) => {
     setCourseData({ ...courseData, ["description"]: value });
   }
 
@@ -110,7 +110,7 @@ function CourseForm({ data, ADD, CANCEL }) {
             <label>
               Description:
             </label>
-            <RichTextEditor content={courseData.description} setContent={handleContentChange}/>
+            <RichTextEditor content={courseData.description} setContent={handleContentChange} />
           </div>
           <div className={styles.formRight}>
             <input type="text" name="title" placeholder='Titre' value={courseData.title} onChange={handleInputChange} />
@@ -142,7 +142,11 @@ function CourseForm({ data, ADD, CANCEL }) {
                 ))}
               </select>
             </label>
-            <input type="text" name="urlVideo" placeholder='Video URL' value={courseData.videoUrl} onChange={handleInputChange} />
+            <label>
+              Cours details:
+            </label>
+            <input type="text" name="url" placeholder='Meet URL' value={courseData.url} onChange={handleInputChange} />
+            <input type="text" name="videoUrl" placeholder='Video URL' value={courseData.videoUrl} onChange={handleInputChange} />
             <input type="text" name="quizUrl" placeholder='Quiz URL' value={courseData.quizUrl} onChange={handleInputChange} />
             <div className={styles.cardButtons}>
               {

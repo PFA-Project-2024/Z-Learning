@@ -36,9 +36,6 @@ function CourseCard({ course, register }) {
           {ratingStars(rating)}
         </div>
         <p><i>{formatDate(startDate)}</i> à <i>{formatDate(endDate)}</i></p>
-        <p className={styles.courseDescription}>
-          {description}
-        </p>
         <div className={styles.buttonsContainer}>
           {register && 
           <button className={`${styles.registerButton} ${subscribe ? "btn-info" : ""}`} onClick={() => register(url)} style={{cursor: subscribe ? 'not-allowed' : 'pointer'}} disabled={subscribe}>{subscribe ? "Vous êtes inscrit à ce cours" : "S'inscrire à ce cours"}</button>
