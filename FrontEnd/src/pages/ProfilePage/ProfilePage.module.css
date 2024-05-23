@@ -1,6 +1,61 @@
-.container
-{
-    margin-top: 20px;
-    /* DO ur magic here */
-    background-color: var(--red);
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: #f4f4f9;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardBody {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.profilePicContainer {
+    margin-right: 200px;
+
+}
+
+.profilePic {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.userName {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.userDetail {
+    font-size: 1rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+.userdata{
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+    padding-right: 20px;
 }
