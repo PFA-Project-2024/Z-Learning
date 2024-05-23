@@ -62,7 +62,7 @@ function SessionsPage() {
         </div>
 
         {popup &&
-          <PopUp title="Alerte!"
+          <PopUp title="Alerte"
             description="Le cours n’est pas valable pour l’instant. Veuillez patienter jusqu’à la date du cours."
             OK={closePopup} />
         }

@@ -57,9 +57,6 @@ function Course() {
       <Carousel responsive={responsive}>
         {getNearCourses().map((course) => (
           <div key={course.id} className={styles.courseCardWrapper}>
-            {/* <CourseCard courseId={course.id} title={course.title} desctiption={course.description}
-              price={course.price} category={course.categoryName} rating={course.rating} 
-              image={course.mainImagePath} url={course.URL} /> */}
               <CourseCard course={course} />
           </div>
         ))}

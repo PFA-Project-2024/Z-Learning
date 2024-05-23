@@ -71,6 +71,7 @@ function Header() {
       {/* Courses sub-navbar */}
       {isPanelVisible && (
       <div className={styles.panel}>
+        <a href={`/courses`}>Tout</a>
         {categories.map((c)=>(
           <a key={c.id} href={`/courses/${c.name}`}>{c.name}</a>
         ))}
