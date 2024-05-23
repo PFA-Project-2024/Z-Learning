@@ -23,18 +23,25 @@ public class UserController {
     }
 
     @PostMapping("/login/{userName}/{password}")
-    public User login(@PathVariable String userName, @PathVariable String password) {
-        if(userSevice.loginValidation(userName, password) != null) {
-            return userSevice.loginValidation(userName, password);
+    public ResponseEntity login(@PathVariable String email, @PathVariable String password) {
+
+        try {
+            userSevice.loginValidation(email, password);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return null;
+
     }
 
     @PostMapping("/register")
-    public User register(User user) {
-        if(userSevice.register(user) != null) {
-            return userSevice.register(user);
+    public ResponseEntity register(User user) {
+        try {
+            userSevice.register(user);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return null;
+
     }
 }

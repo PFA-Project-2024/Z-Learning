@@ -17,23 +17,21 @@ public class UserSevice {
     }
 
 
-    public User loginValidation(String userName, String password) {
-        User user = userRepo.findByUserName(userName);
+    public void loginValidation(String email, String password) {
+        User user = userRepo.findByEmail(email);
 
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if(user == null && !user.getPassword().equals(password)) {
+           throw new RuntimeException("Invalid email or password");
         }
-        return null;
     }
 
-    public User register(User user) {
+    public void register(User user) {
         List<User> users = userRepo.findAll();
         for (User u : users) {
-            if (u.getUserName().equals(user.getUserName())) {
-                return null;
+            if (u.getEmail().equals(user.getEmail())) {
+                throw new RuntimeException("Email already exists");
             }
         }
         userRepo.save(user);
-        return user;
     }
 }

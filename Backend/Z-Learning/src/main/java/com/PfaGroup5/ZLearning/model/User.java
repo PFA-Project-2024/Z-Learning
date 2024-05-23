@@ -4,14 +4,19 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document()
 public class User {
     @Id
     private String id;
-    private String userName;
+    private String firstName;
+    private String lastName;
     private String password;
     private String email;
+    private boolean isAdmin;
+    private List<Course> courseList;
 
 
 }
