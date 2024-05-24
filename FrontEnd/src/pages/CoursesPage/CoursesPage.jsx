@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom';
 import Cookies from "js-cookie";
 import axios from 'axios';
 
+//utils
+import {refreshPage} from '../../utils/web';
+
 //components
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -49,7 +52,6 @@ function CoursesPage() {
 
   const enroll = async (course) => {
     const user = GetCookie("user");
-    
     try {
       await axios.post(`http://localhost:8080/user/${user.id}/courses/${course.id}`);
     } catch (error) {
@@ -64,8 +66,8 @@ function CoursesPage() {
 
       const userData = response.data;
       Cookies.set("user", JSON.stringify(userData), { expires: 1 });
+      refreshPage();
     } catch (error) {
-      alert("Erreur");
       console.error('Error fetching data:', error.response || error.message);
     }
 
@@ -122,6 +124,7 @@ function CoursesPage() {
     const fetchUserCourses = async () => {
       try {
         const user = GetCookie("user");
+        console.log(user);
         const val = await axios.get(`http://localhost:8080/user/${user.id}/courses`);
         setUserCourses(val.data);
       } catch (error) {
