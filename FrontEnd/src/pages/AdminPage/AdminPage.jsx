@@ -1,8 +1,10 @@
 import styles from './AdminPage.module.css';
 import { useNavigate, Outlet } from "react-router-dom";
+import Cookies from "js-cookie";
 
 //images
 import Logo from "../../assets/images/graduation-hat.png";
+import { useEffect } from 'react';
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -10,6 +12,30 @@ export default function AdminPage() {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  const handleLogout = () => {
+    Cookies.remove("user");
+    navigate("/login");
+  }
+
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const user = GetCookie('user');
+    // if (!user.isAdmin) {
+    //   navigate("/login");
+    // }
+  }, []);
 
   return (
     <div>
@@ -19,7 +45,7 @@ export default function AdminPage() {
             <img src={Logo} alt="ZLearning logo" />
             ZLearning
           </a>
-          <button className="btn-v2" onClick={() => handleNavigate("/login")}>Logout</button>
+          <button className="btn-v2" onClick={handleLogout}>Se déconnecter</button>
         </div>
 
         <div className={styles.body}>
