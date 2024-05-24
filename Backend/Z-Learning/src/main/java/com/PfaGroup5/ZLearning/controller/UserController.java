@@ -39,6 +39,16 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/{userID}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userID) {
+        try {
+            userSevice.deleteUser(userID);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("User not deleted");
+        }
+    }
+
 
     //enroll , unenroll  and getCourses for user
 
@@ -51,7 +61,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @DeleteMapping("/{userID}/courses/{courseID}/")
+    @DeleteMapping("/{userID}/courses/{courseID}")
     public ResponseEntity unenrollCourse(@PathVariable String userID, @PathVariable String courseID) {
         try {
             userSevice.unenrollCourse(userID, courseID);

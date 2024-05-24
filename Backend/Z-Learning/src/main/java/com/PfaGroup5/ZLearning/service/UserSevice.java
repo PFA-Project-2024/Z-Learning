@@ -38,6 +38,10 @@ public class UserSevice {
         return user;
     }
 
+    public void deleteUser(String id){
+        userRepo.deleteById(id);
+    }
+
     public void enrollCourse(String userID, String courseID) {
         User user = userRepo.findById(userID).orElseThrow(() -> new RuntimeException(
                 String.format("Cannot Find User by Id %s", userID)));
