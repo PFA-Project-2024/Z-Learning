@@ -7,15 +7,15 @@ import About from '../../components/About/About';
 import Newsletter from '../../components/Newsletter/Newsletter';
 
 function HomePage() {
-
-    return (
-      <>
-        <Home />
-        <Course />
-        <About />
-        <Newsletter />
-      </>
-    )
-  }
   
-  export default HomePage
+  return (
+    <>
+      <Home />
+      <Course />
+      <About />
+      <Newsletter />
+    </>
+  )
+}
+
+export default HomePage

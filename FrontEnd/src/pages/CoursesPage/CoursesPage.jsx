@@ -2,6 +2,7 @@ import styles from "./CoursesPage.module.css";
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Cookies from "js-cookie";
 import axios from 'axios';
 
 //components
@@ -15,6 +16,7 @@ function CoursesPage() {
   const [pop, setPop] = useState(false);
 
   const [courses, setCourses] = useState([]);
+  const [userCourses, setUserCourses] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -33,12 +35,46 @@ function CoursesPage() {
     document.body.style.overflow = val ? 'scroll' : 'hidden';
   }
 
-  const enroll = () => {
-    setScroll(false);
-    setPop(true);
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return undefined;
+    }
+  };
+
+  const enroll = async (course) => {
+    const user = GetCookie("user");
+    
+    try {
+      await axios.post(`http://localhost:8080/user/${user.id}/courses/${course.id}`);
+    } catch (error) {
+      console.error('Error adding course to user:', error);
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8080/user/login', {
+        email: user.email,
+        password: user.password
+      });
+
+      const userData = response.data;
+      Cookies.set("user", JSON.stringify(userData), { expires: 1 });
+    } catch (error) {
+      alert("Erreur");
+      console.error('Error fetching data:', error.response || error.message);
+    }
+
+    // setScroll(false);
+    // setPop(true);
   }
 
   const popUpOK = () => {
+
     setScroll(true);
     setPop(false);
   }
@@ -46,6 +82,12 @@ function CoursesPage() {
   const popUpCancel = () => {
     setScroll(true);
     setPop(false);
+  }
+
+  const isSubscribed = (course) => {
+    return userCourses.some(obj => {
+      return Object.keys(course).every(key => obj[key] === course[key]);
+    });
   }
 
   useEffect(() => {
@@ -68,7 +110,7 @@ function CoursesPage() {
   }, [categories]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCourses = async () => {
       try {
         const val = await axios.get('http://localhost:8080/admin/courses');
         setCourses(val.data);
@@ -77,8 +119,19 @@ function CoursesPage() {
       }
     };
 
-    fetchData();
-  }, [courses]);
+    const fetchUserCourses = async () => {
+      try {
+        const user = GetCookie("user");
+        const val = await axios.get(`http://localhost:8080/user/${user.id}/courses`);
+        setUserCourses(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchCourses();
+    fetchUserCourses();
+  }, [courses, userCourses]);
 
   return (
     <>
@@ -122,7 +175,7 @@ function CoursesPage() {
         </div>
         <div className={styles.courses}>
           {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} register={enroll}/>
+            <CourseCard key={course.id} course={course} subscribe={isSubscribed(course)} register={() => enroll(course)} />
           ))}
         </div>
         {pop &&

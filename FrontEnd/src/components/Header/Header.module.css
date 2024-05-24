@@ -9,6 +9,13 @@
 {
     font-size: 22px;
     color: var(--green);
+
+    display: flex;
+}
+
+.logo img
+{
+    width: 35px;
 }
 
 .list ul

@@ -18,6 +18,13 @@
 {
     font-size: 22px;
     color: var(--green);
+
+    display: flex;
+}
+
+.navbar img
+{
+    width: 36px;
 }
 
 /* Body section */

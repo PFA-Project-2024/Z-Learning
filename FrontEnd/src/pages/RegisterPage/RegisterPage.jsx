@@ -1,21 +1,49 @@
 import styles from "./RegisterPage.module.css";
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from 'axios';
+
+//components
+import Logo from "../../components/Logo/Logo";
 
 function RegisterPage() {
+  const navigate = useNavigate();
+
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    // Implement your registration logic here (e.g., API calls, validation)
-    console.log('Registering user:', fullName, email, password);
-    // Redirect to the login page after successful registration
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:8080/user/register', {
+        lastName: lastName,
+        firstName: firstName,
+        phoneNumber: phoneNumber,
+        email: email,
+        password: password,
+        admin: false,
+        courseList: []
+      });
+
+      const user = response.data;
+      console.log(user);
+      Cookies.set("user", JSON.stringify(user), { expires: 1 });
+
+      navigate("/");
+    } catch (error) {
+      alert("Erreur");
+      console.error('Error fetching data:', error.response || error.message);
+    }
   };
 
   return (
     <div className={styles.registrationContainer}>
+      <Logo />
       <form className={styles.registrationForm}>
         <h1>Inscription</h1>
         <input

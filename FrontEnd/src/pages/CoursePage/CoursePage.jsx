@@ -3,6 +3,7 @@ import styles from "./CoursePage.module.css";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import Cookies from "js-cookie";
 import axios from 'axios';
 
 //components
@@ -17,20 +18,42 @@ import { ratingStars, formatDate } from "../../utils/helpers";
 import placeholder from "../../assets/images/placeholder.png";
 import profileHolder from "../../assets/images/profile.png";
 
-function CoursesPage() {
+function CoursePage() {
   const params = useParams();
   const [pop, setPop] = useState(false);
   const [id, setId] = useState('');
 
   const [course, setCourse] = useState({});
+  const [userCourses, setUserCourses] = useState([]);
 
   const setScroll = (val) => {
     document.body.style.overflow = val ? 'scroll' : 'hidden';
   }
 
-  const enroll = () => {
-    setScroll(false);
-    setPop(true);
+  const enroll = async () => {
+    const user = GetCookie("user");
+    
+    try {
+      await axios.post(`http://localhost:8080/user/${user.id}/courses/${course.id}`);
+    } catch (error) {
+      console.error('Error adding course to user:', error);
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8080/user/login', {
+        email: user.email,
+        password: user.password
+      });
+
+      const userData = response.data;
+      Cookies.set("user", JSON.stringify(userData), { expires: 1 });
+    } catch (error) {
+      alert("Erreur");
+      console.error('Error fetching data:', error.response || error.message);
+    }
+
+    // setScroll(false);
+    // setPop(true);
   }
 
   const popUpOK = () => {
@@ -43,12 +66,30 @@ function CoursesPage() {
     setPop(false);
   }
 
+  const isSubscribed = () => {
+    return userCourses.some(obj => {
+      return Object.keys(course).every(key => obj[key] === course[key]);
+    });
+  }
+
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return undefined;
+    }
+  };
+
   useEffect(() => {
     if (params.id) {
       setId(params.id);
     }
 
-    const fetchData = async () => {
+    const fetchCourse = async () => {
       try {
         const val = await axios.get(`http://localhost:8080/admin/courses/${params.id}`);
         setCourse(val.data);
@@ -57,8 +98,22 @@ function CoursesPage() {
       }
     };
 
-    fetchData();
+    fetchCourse();
   }, [course]);
+
+  useEffect(() => {
+    const fetchUserCourses = async () => {
+      try {
+        const user = GetCookie("user");
+        const val = await axios.get(`http://localhost:8080/user/${user.id}/courses`);
+        setUserCourses(val.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUserCourses();
+  }, [userCourses]);
 
   return (
     <>
@@ -79,9 +134,9 @@ function CoursesPage() {
             <h3>À propos de ce cours</h3>
 
             <div className={`tiptap ${styles.descriptionContainer}`} dangerouslySetInnerHTML={{ __html: course.description }}></div>
-          
+
           </div>
-          {course.videoUrl &&
+          {/* {course.videoUrl &&
             <div className={styles.courseVideo}>
               <h3>Enregistrement vidéo du cours</h3>
               <ReactPlayer
@@ -90,7 +145,7 @@ function CoursesPage() {
                 height="100%"
                 controls />
             </div>
-          }
+          } */}
         </div>
         <div className={styles.side}>
           {/* Course Info */}
@@ -101,8 +156,7 @@ function CoursesPage() {
             </div>
             <p><i>{formatDate(course.startDate)}</i> à <i>{formatDate(course.endDate)}</i></p>
             <p className={styles.coursePrice}>{course.price} Dhs</p>
-            <button className={styles.courseButton} onClick={enroll}>S'inscrire à ce cours</button>
-
+            <button className={`${styles.courseButton} ${isSubscribed() ? "btn-info" : ""}`} onClick={() => enroll()} style={{ cursor: isSubscribed() ? 'not-allowed' : 'pointer' }} disabled={isSubscribed()}>{isSubscribed() ? "Vous êtes inscrit à ce cours" : "S'inscrire à ce cours"}</button>
             {pop &&
               <PopUp title="S'inscrire à ce cours"
                 description="Êtes-vous sûr de vouloir vous inscrire à ce cours ?"
@@ -144,4 +198,4 @@ function CoursesPage() {
   )
 }
 
-export default CoursesPage
+export default CoursePage

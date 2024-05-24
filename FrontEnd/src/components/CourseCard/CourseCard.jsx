@@ -6,18 +6,17 @@ import { ratingStars, formatDate } from "../../utils/helpers";
 
 //images
 import placeholder from "../../assets/images/placeholder.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function CourseCard({ course, register }) {
+function CourseCard({ course, subscribe, register }) {
   const navigate = useNavigate();
 
   const {id, title, mainImagePath, price, categoryName, description, startDate, endDate, rating, url} = course;
 
-  const [subscribe, setSubscribe] = useState(false);
-
   const open = () => {
     navigate(`/courses/${categoryName}/${id}`);
   }
+
   return (
     <div className={styles.courseCard}>
       <div className={styles.courseDetails}>
@@ -36,9 +35,6 @@ function CourseCard({ course, register }) {
           {ratingStars(rating)}
         </div>
         <p><i>{formatDate(startDate)}</i> à <i>{formatDate(endDate)}</i></p>
-        <p className={styles.courseDescription}>
-          {description}
-        </p>
         <div className={styles.buttonsContainer}>
           {register && 
           <button className={`${styles.registerButton} ${subscribe ? "btn-info" : ""}`} onClick={() => register(url)} style={{cursor: subscribe ? 'not-allowed' : 'pointer'}} disabled={subscribe}>{subscribe ? "Vous êtes inscrit à ce cours" : "S'inscrire à ce cours"}</button>
