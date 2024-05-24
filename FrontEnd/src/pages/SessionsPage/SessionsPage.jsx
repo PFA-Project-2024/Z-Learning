@@ -3,6 +3,7 @@ import styles from "./SessionsPage.module.css";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import axios from 'axios';
 
 //components
@@ -16,6 +17,7 @@ import { checkDateRange } from "../../utils/helpers";
 
 function SessionsPage() {
   const navigate = useNavigate();
+  const [user, setUser] = useState();
 
   const [popup, setPopup] = useState(false);
   const [courses, setCourses] = useState([]);
@@ -34,22 +36,36 @@ function SessionsPage() {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const userData = GetCookie("user");
+
+    const fetchData = async (userData) => {
       try {
-        const val = await axios.get('http://localhost:8080/admin/courses');
+        const val = await axios.get(`http://localhost:8080/user/${userData.id}/courses`);
         setCourses(val.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    fetchData();
+    fetchData(userData);
   }, [courses]);
 
   const sortedCourses = () => {
     //sort by ongoing first, soon second and ended last
     return courses.sort((a, b) => checkDateRange(a.startDate, a.endDate) - checkDateRange(b.startDate, b.endDate));
   }
+
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return undefined;
+    }
+  };
 
   return (
     <>

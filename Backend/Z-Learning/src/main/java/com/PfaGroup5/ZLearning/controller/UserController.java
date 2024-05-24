@@ -20,7 +20,7 @@ public class UserController {
         this.userSevice = userSevice;
     }
     //login and register
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody UserDTO credentials) {
         try {
             User user = userSevice.loginValidation(credentials.getEmail(), credentials.getPassword());

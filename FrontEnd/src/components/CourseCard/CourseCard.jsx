@@ -6,18 +6,17 @@ import { ratingStars, formatDate } from "../../utils/helpers";
 
 //images
 import placeholder from "../../assets/images/placeholder.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function CourseCard({ course, register }) {
+function CourseCard({ course, subscribe, register }) {
   const navigate = useNavigate();
 
   const {id, title, mainImagePath, price, categoryName, description, startDate, endDate, rating, url} = course;
 
-  const [subscribe, setSubscribe] = useState(false);
-
   const open = () => {
     navigate(`/courses/${categoryName}/${id}`);
   }
+
   return (
     <div className={styles.courseCard}>
       <div className={styles.courseDetails}>

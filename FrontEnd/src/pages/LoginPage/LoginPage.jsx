@@ -2,6 +2,7 @@ import styles from "./LoginPage.module.css";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from 'axios';
 
 //components
 import Logo from "../../components/Logo/Logo";
@@ -9,37 +10,34 @@ import Logo from "../../components/Logo/Logo";
 function LoginPage() {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
+  const [userData, setUserData] = useState({
     email: "",
     password: ""
   })
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log('Logging in with:', user);
-    SetCookie("user", JSON.stringify(user), 1);
+    try {
+      const response = await axios.post('http://localhost:8080/user/login', userData);
+      
+      const user = response.data;
+      Cookies.set("user", JSON.stringify(user), { expires: 1 });
 
-    // if(user.isAdmin)
-    // {
-    //   navigate("/admin");
-    // }else
-      navigate("/");
-  };
-
-  const SetCookie = (key, value, expireDays) => {
-    Cookies.set(key, value, {
-      expires: expireDays,
-    });
-  };
-
-  const GetCookie = (key) => {
-    alert(Cookies.get(key));
+      if (user.admin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      alert("Erreur");
+      console.error('Error fetching data:', error.response || error.message);
+    }
   };
 
   return (
@@ -51,14 +49,14 @@ function LoginPage() {
           type="text"
           name="email"
           placeholder="Email"
-          value={user.email}
+          value={userData.email}
           onChange={handleInputChange}
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
-          value={user.password}
+          value={userData.password}
           onChange={handleInputChange}
         />
         <p className={styles.info}>Pas encore inscrit(e) <a href="/register">S'inscrire</a></p>

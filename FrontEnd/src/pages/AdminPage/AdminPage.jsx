@@ -32,9 +32,9 @@ export default function AdminPage() {
 
   useEffect(() => {
     const user = GetCookie('user');
-    // if (!user.isAdmin) {
-    //   navigate("/login");
-    // }
+    if (!user.admin) {
+      navigate("/login");
+    }
   }, []);
 
   return (

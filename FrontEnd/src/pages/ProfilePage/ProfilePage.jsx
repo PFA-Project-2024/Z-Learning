@@ -1,4 +1,6 @@
 import styles from "./ProfilePage.module.css";
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 //images
 import User from "../../assets/images/user.png";
@@ -6,7 +8,6 @@ import User from "../../assets/images/user.png";
 //Components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { useState } from "react";
 
 function ProfilePage() {
   const [user, setUser] = useState({
@@ -20,6 +21,23 @@ function ProfilePage() {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const user = GetCookie('user');
+    setUser(user);
+  }, []);
 
   return (
     <>
@@ -52,7 +70,7 @@ function ProfilePage() {
             </div>
             <p className={styles.userDetail}>Numéro de téléphone:</p>
             <div className={styles.userdata}>
-            <input className={styles.input} type="number" name="phoneNumber" placeholder="0612-333-321" value={user.phone} onChange={handleInputChange} readOnly={true}/>
+            <input className={styles.input} type="number" name="phoneNumber" placeholder="0612-333-321" value={user.phoneNumber} onChange={handleInputChange} readOnly={true}/>
             </div>
           </div>
         </div>

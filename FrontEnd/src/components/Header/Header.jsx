@@ -10,7 +10,8 @@ import CustomLink from "../CustomLink/CustomLink";
 //images
 import Logo from "../../assets/images/graduation-hat.png";
 
-function Header({ user }) {
+function Header() {
+  const [user, setUser] = useState();
   const [isPanelVisible, setPanelVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Header({ user }) {
     navigate(path);
   };
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     Cookies.remove("user");
     navigate("/login");
   }
@@ -44,6 +45,22 @@ function Header({ user }) {
     setPanelVisible(!isPanelVisible);
   }
 
+  const GetCookie = (key) => {
+    const cookieValue = Cookies.get(key);
+
+    try {
+      const jsonValue = JSON.parse(cookieValue);
+      return jsonValue;
+    } catch (e) {
+      console.error("Cookie value is not valid JSON", e);
+      return undefined;
+    }
+  };
+
+  useEffect(()=>{
+    setUser(GetCookie("user"));
+  }, []);
+
   return (
     <div>
       <div className={styles.container}>
@@ -59,11 +76,15 @@ function Header({ user }) {
             <li><CustomLink href="/#home">Accueil</CustomLink></li>
             <li onClick={coursToggle}> <CustomLink href="">Cours</CustomLink></li>
             {
-              user &&
+              (user && user.courseList.length !== 0) &&
               <li><CustomLink href="/sessions">Sessions</CustomLink></li>
             }
             <li><CustomLink href="/#about">À propos</CustomLink></li>
             <li><CustomLink href="/#newsletter">Newsletter</CustomLink></li>
+            {
+              user &&
+              <li><CustomLink href="/profile">Profil</CustomLink></li>
+            }
           </ul>
         </div>
 
