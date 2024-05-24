@@ -2,6 +2,7 @@ package com.PfaGroup5.ZLearning.controller;
 
 import com.PfaGroup5.ZLearning.model.Course;
 import com.PfaGroup5.ZLearning.model.User;
+import com.PfaGroup5.ZLearning.model.UserDTO;
 import com.PfaGroup5.ZLearning.service.UserSevice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,10 @@ public class UserController {
         this.userSevice = userSevice;
     }
     //login and register
-    @PostMapping("/login/{email}/{password}")
-    public ResponseEntity<User> login(@PathVariable String email, @PathVariable String password) {
+    @GetMapping("/login")
+    public ResponseEntity<User> login(@RequestBody UserDTO credentials) {
         try {
-            User user = userSevice.loginValidation(email, password);
+            User user = userSevice.loginValidation(credentials.getEmail(), credentials.getPassword());
             return ResponseEntity.ok().body(user);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(null);
