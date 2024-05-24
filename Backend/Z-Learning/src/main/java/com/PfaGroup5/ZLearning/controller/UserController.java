@@ -42,7 +42,7 @@ public class UserController {
 
     //enroll , unenroll  and getCourses for user
 
-    @PostMapping("/{userID}/{courseID}")
+    @PostMapping("/{userID}/courses/{courseID}")
     public ResponseEntity enrollCourse(@PathVariable String userID, @PathVariable String courseID) {
         try {
             userSevice.enrollCourse(userID, courseID);
@@ -51,7 +51,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @DeleteMapping("/{userID}/{courseID}")
+    @DeleteMapping("/{userID}/courses/{courseID}/")
     public ResponseEntity unenrollCourse(@PathVariable String userID, @PathVariable String courseID) {
         try {
             userSevice.unenrollCourse(userID, courseID);
