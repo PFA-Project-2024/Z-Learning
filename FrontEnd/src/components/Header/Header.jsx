@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import axios from 'axios';
 
 //components
@@ -9,8 +10,7 @@ import CustomLink from "../CustomLink/CustomLink";
 //images
 import Logo from "../../assets/images/graduation-hat.png";
 
-function Header() {
-  const [isSession, setIsSession] = useState(true);
+function Header({ user }) {
   const [isPanelVisible, setPanelVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -18,6 +18,11 @@ function Header() {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  const handleLogout = ()=>{
+    Cookies.remove("user");
+    navigate("/login");
+  }
 
   const [categories, setCategories] = useState([]);
 
@@ -34,7 +39,7 @@ function Header() {
     fetchData();
   }, [categories]);
 
-  const coursToggle = (e)=>{
+  const coursToggle = (e) => {
     e.preventDefault();
     setPanelVisible(!isPanelVisible);
   }
@@ -54,7 +59,7 @@ function Header() {
             <li><CustomLink href="/#home">Accueil</CustomLink></li>
             <li onClick={coursToggle}> <CustomLink href="">Cours</CustomLink></li>
             {
-              isSession &&
+              user &&
               <li><CustomLink href="/sessions">Sessions</CustomLink></li>
             }
             <li><CustomLink href="/#about">À propos</CustomLink></li>
@@ -63,19 +68,26 @@ function Header() {
         </div>
 
         <div className={styles.auth}>
-          <button className="btn-v2" onClick={()=>handleNavigate("/login")}>Se connecter</button>
-          <button onClick={()=>handleNavigate("/register")}>S’inscrire</button>
+          {
+            user ?
+              <button className="btn-v2" onClick={handleLogout}>Se déconnecter</button>
+              :
+              <>
+                <button className="btn-v2" onClick={() => handleNavigate("/login")}>Se connecter</button>
+                <button onClick={() => handleNavigate("/register")}>S’inscrire</button>
+              </>
+          }
         </div>
       </div>
 
       {/* Courses sub-navbar */}
       {isPanelVisible && (
-      <div className={styles.panel}>
-        <a href={`/courses`}>Tout</a>
-        {categories.map((c)=>(
-          <a key={c.id} href={`/courses/${c.name}`}>{c.name}</a>
-        ))}
-      </div>
+        <div className={styles.panel}>
+          <a href={`/courses`}>Tout</a>
+          {categories.map((c) => (
+            <a key={c.id} href={`/courses/${c.name}`}>{c.name}</a>
+          ))}
+        </div>
       )}
     </div>
   )
