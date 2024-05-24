@@ -109,7 +109,7 @@ Certainly! Here are step-by-step instructions to set up and run your project loc
 ### Prerequisites
 
 - **Git:** Make sure you have Git installed. If not, download and install it from [git-scm.com](https://git-scm.com/).
-- **Docker:** Make sure you have Git installed.If not, download and install it from [git-scm.com](https://git-scm.com/).
+- **Docker:** Make sure you have Git installed.If not, download and install it from [docker.com](https://docs.docker.com/get-docker/) for your respective operating system.
 - **Node Version Manager (NVM):** Install NVM from [github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm). Use NVM to install Node.js version 14.11.0: `nvm install 14.11.0`.
 
 ### Backend Setup
