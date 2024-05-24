@@ -30,13 +30,12 @@ public class UserSevice {
     }
 
     public User register(User user) {
-        List<User> users = userRepo.findAll();
-        for (User u : users) {
-            if (u.getEmail().equals(user.getEmail())) {
-                throw new RuntimeException("Email already exists");
-            }
+        User existingUser = userRepo.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new RuntimeException("Email already exists");
         }
-        return userRepo.insert(user);
+        userRepo.save(user);
+        return user;
     }
 
     public void enrollCourse(String userID, String courseID) {
