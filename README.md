@@ -172,6 +172,7 @@ Server: Firebase
 # Video Demonstration
 
 Click the link below to watch a demonstration video:
+[Watch the video](https://github.com/PFA-Project-2024/Z-Learning/raw/readme/VID-20240526-WA0007.mp4)
 
 
 
