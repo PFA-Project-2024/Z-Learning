@@ -11,7 +11,6 @@ This project is all about creating a virtual school where you can take certifica
 - [Frontend Infrastructure](#frontend-infrastructure)
 - [Backend Infrastructure](#backend-infrastructure)
 - [Getting Started](#getting-started)
-- [Folder Structure](#folder-structure)
 - [Video Demonstration](#video-demonstration)
 - [Contributing](#contributing)
 
@@ -118,3 +117,74 @@ Certainly! Here are step-by-step instructions to set up and run your project loc
    ```bash
    git clone <repository_url>
    cd <project_folder>
+
+2. **Install Backend Dependencies:**
+   - Open a terminal in the backend project folder.
+   - Run the following commands:
+     ```bash
+     mvn clean install
+     ```
+
+3. **Run Backend:**
+   - Run the Spring Boot application. The database and entities will be created automatically.
+   - Verify that the backend is running by visiting [http://localhost:8082](http://localhost:8089) in your browser.
+
+### Frontend Setup:
+
+1. **Install Node.js and React:**
+   - Open a new terminal for the frontend project.
+   - Ensure NVM is using Node.js version 14.11.0: `nvm use 14.11.0`.
+
+2. **Install Frontend Dependencies:**
+   - Run the following commands in the frontend project folder:
+     ```bash
+     npm install
+     ```
+
+   - If you encounter errors during installation, use the following command:
+     ```bash
+     npm install --save --legacy-peer-deps
+     ```
+
+3. **Run Frontend:**
+   - After installing dependencies, start the React development server:
+     ```bash
+     npm start 
+     ```
+Now, your full-stack project should be up and running locally. If you encounter any issues during setup, check the console logs for error messages and ensure that all dependencies and prerequisites are correctly installed.
+
+### Mobile Setup:
+
+### Installation
+1. Install flutter Sdk from flutter.dev
+2. install code editor vscode or android studio
+3. create a new firebase project in firebase console andadd required file .
+4. flutter pub get
+5. flutter packages pub run build_runner build --delete-conflicting-outputs
+6. flutter run
+
+### Tech Stack
+
+Client: Flutter
+
+Server: Firebase
+
+# Video Demonstration
+
+Click the link below to watch a demonstration video:
+
+
+
+
+# Contributing
+
+We welcome contributions from everyone, and we appreciate your help to make this project even better! If you would like to contribute, please follow these guidelines:
+
+## Contributors
+- Ahmed Warid ([GitHub](https://github.com/AhmedWarid))
+- Yahya Lazrek ([GitHub](https://github.com/UUinc))
+- Zakaria Messous ([GitHub](https://github.com/zakaria-messous))
+- Zyad Eloussoul ([GitHub](https://github.com/zyadeloussoul))
+- Abdelbarie Lmati ([GitHub](https://github.com/Lmati01))
+- Mohamed Lachgar ([Researchgate](https://www.researchgate.net/profile/Mohamed-Lachgar))
+
